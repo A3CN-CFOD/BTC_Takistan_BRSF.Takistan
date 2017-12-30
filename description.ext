@@ -30,7 +30,6 @@ class RscTitles {
 
 #include "core\fnc\eh\extended_InitPost_EH.hpp"
 
-//////////////// GHST Suport
-#include "functions\cfgfunctions.hpp"
-// Comm Menu
+// A3CN Transport System
+#include "a3cn\cfgfunctions.hpp"
 //#include "comm_menu.h"
