@@ -1,43 +1,7 @@
 waituntil {! isnull player};
 
-//RHS Escalation Detect
-_PARAM_RHS = "PARAM_RHS" call BIS_fnc_getParamValue;
-if ((isClass(configFile >> "CfgPatches" >> "rhs_main")) and (_PARAM_RHS == 1)) then {
-	ghst_rhsmod = true;
-	ghst_attackplane = ["B_Plane_CAS_01_F","B_Plane_CAS_01_F","B_Plane_Fighter_01_F","B_Plane_Fighter_01_Stealth_F"];
-	ghst_gunship = "B_T_VTOL_01_armed_F";
-	ghst_attachhelo = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
-	ghst_transportheli = "B_Heli_Transport_01_camo_F";
-	ghst_airliftheli = "B_Heli_Transport_03_F";
-	ghst_escortheli = ["B_Heli_Attack_01_F"];
-} else {
-	ghst_rhsmod = false;
-	ghst_attackplane = ["B_Plane_CAS_01_F","B_Plane_CAS_01_F","B_Plane_Fighter_01_F","B_Plane_Fighter_01_Stealth_F"];
-	ghst_gunship = "B_T_VTOL_01_armed_F";
-	ghst_attachhelo = ["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
-	ghst_transportheli = "B_Heli_Transport_01_camo_F";
-	ghst_airliftheli = "B_Heli_Transport_03_F";
-	ghst_escortheli = ["B_Heli_Attack_01_F"];
-};
-PARAM_Cooldowns = "PARAM_Cooldowns" call BIS_fnc_getParamValue;
 
-//UAV Types
-ghst_uav = ["B_T_UAV_03_F","B_UAV_02_F","B_UAV_02_CAS_F","B_UAV_05_F"];
-//West Cargo Aircraft type
-ghst_air_cargo = "B_Heli_Transport_03_F";
-if ghst_rhsmod then {ghst_air_cargo = B_Heli_Transport_03_F";};
 
-if ghst_rhsmod then {
-	call ghst_fnc_rhs_vehiclelist;
-	call ghst_fnc_rhs_aircraftlist;
-	call ghst_fnc_rhs_boatlist;
-} else {
-	call ghst_fnc_vehiclelist;
-	call ghst_fnc_aircraftlist;
-	call ghst_fnc_boatlist;
-};
-
-#include "addnotes.sqf"
 
 if (player iskindof "B_recon_JTAC_F") then {
 [player,"Attackhelo"] call BIS_fnc_addCommMenuItem;
