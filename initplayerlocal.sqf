@@ -9,11 +9,14 @@ waituntil {! isnull player};
 ////////////Trasporte Aereo AI
 if (player iskindof "B_Soldier_SL_F") then {
 
-_action = ["callTransport", "Chamar transporte", "imagens\radio.paa", {["B_Heli_Transport_01_F",["RHS_AH64D"],[9231.83,-897.388,508.451],50,0] spawn a3cn_fnc_init_transport}, {true}] call ace_interact_menu_fnc_createAction;
+_action = ["callTransport", "Chamar Transporte", "imagens\radio.paa", {["B_Heli_Transport_01_F",["RHS_AH64D"],[9231.83,-897.388,508.451],50,0] spawn a3cn_fnc_init_transport}, {true}] call ace_interact_menu_fnc_createAction;
 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 };
 
-
+_action = ["callGunship", "Chamar Gunship", "imagens\radio.paa", {
+  ["B_T_VTOL_01_armed_F",[9231.83,-897.388,508.451],50,0] spawn a3cn_fnc_init_transport}, {true}] call ace_interact_menu_fnc_createAction;
+[player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+};
 
 
 
