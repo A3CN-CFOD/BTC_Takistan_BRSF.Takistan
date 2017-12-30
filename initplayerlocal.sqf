@@ -4,19 +4,54 @@ waituntil {! isnull player};
 
 
 
+// Constantes
+
+#define TRANSPORT_DELAY 15 // Tempo necessárop ára chamar o transporte novamente. Em minutos.
+#define TRANSPORT_HELO "B_Heli_Transport_01_F"
+
+#define GUNSHIP_DELAY 25 // Tempo necessário para chamar o Gunship novamente. Em minutos.
+#define ESCORT_HELO "RHS_AH64D"
+#define GUNSHIP_HELO "B_T_VTOL_01_armed_F"
 
 
-////////////Trasporte Aereo AI
-if (player iskindof "B_Soldier_SL_F") then {
+// Condições
 
-_action = ["callTransport", "Chamar Transporte", "imagens\radio.paa", {["B_Heli_Transport_01_F",["RHS_AH64D"],[9231.83,-897.388,508.451],50,0] spawn a3cn_fnc_init_transport}, {true}] call ace_interact_menu_fnc_createAction;
+ _gunshipvar = (player getVariable "a3cn_gunship");
+ if (isnil "_gunshipvar") then {
+	player setVariable ["a3cn_gunship", 0];
+ } else {
+	player setVariable ["a3cn_gunship", _gunshipvar];
+ };
+
+player setVariable ["a3cn_transport",0];
+
+// Menu
+
+_action = ["Suporte", "Suporte", "imagens\radio.paa", {},{player iskindof "B_recon_JTAC_F" || player iskindof "B_Soldier_SL_F"}] call ace_interact_menu_fnc_createAction;
 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
-};
 
-_action = ["callGunship", "Chamar Gunship", "imagens\radio.paa", {
-  ["B_T_VTOL_01_armed_F",[9231.83,-897.388,508.451],50,0] spawn a3cn_fnc_init_transport}, {true}] call ace_interact_menu_fnc_createAction;
-[player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
-};
+
+_action = [ "callTransport",
+	  				"Chamar Transporte",
+	  				"imagens\radio.paa",
+	  				{[TRANSPORT_HELO,[ESCORT_HELO],[9231.83,-897.388,508.451],50,TRANSPORT_DELAY] spawn a3cn_fnc_init_transport},
+						{player iskindof "B_Soldier_SL_F"}
+] call ace_interact_menu_fnc_createAction;
+
+[player, 1, ["ACE_SelfActions", "Suporte"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+
+
+_action = ["callGunship", 
+ 						"Chamar Gunship", 
+						"imagens\radio.paa", {
+						[[9231.83,-897.388,508.451],GUNSHIP_HELO,0,[200,500],GUNSHIP_DELAY,"a3cn_gunship",player,true ] spawn a3cn_fnc_gunship
+						},
+						{player iskindof "B_recon_JTAC_F"}
+] call ace_interact_menu_fnc_createAction;
+
+[player, 1, ["ACE_SelfActions", "Suporte"], _action] call ace_interact_menu_fnc_addActionToObject;
+
 
 
 

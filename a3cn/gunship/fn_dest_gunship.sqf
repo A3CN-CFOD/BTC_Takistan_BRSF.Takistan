@@ -10,7 +10,7 @@ _rad = _args select 2;
 
 openMap true;
 
-player groupChat "Left click on the map where you want the gunship to move to";
+player groupChat "Clique no mapa onde você quer enviar a aeronave";
 
 mapclick = false;
 
@@ -19,7 +19,7 @@ onMapSingleClick "clickpos = _pos; mapclick = true; onMapSingleClick """";true;"
 waituntil {mapclick or !(visiblemap)};
 
 	if !(visibleMap) exitwith {
-		player groupchat "New destination request cancelled";
+		player groupchat "Novo destino cancelado";
 	};
 	
 _pos = [clickpos select 0, clickpos select 1, (getposatl player) select 2];
@@ -28,7 +28,7 @@ sleep 1;
 
 openMap false;
 
-_air1 sidechat "Moving to new location";
+_air1 sidechat "Movendo para nova localização";
 
 _air1 move _pos;
 _air1 setSpeedMode "Normal";

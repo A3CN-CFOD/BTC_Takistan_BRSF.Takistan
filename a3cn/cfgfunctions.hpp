@@ -4,6 +4,14 @@ class CfgFunctions
 			{
 			tag = "A3CN";
 
+				class common {
+					file = "a3cn\common";
+					class tracker {description = "mostra onde o ponto está";};
+					class mark_local {description = "mark2";};
+					class mark_global {description = "mark";};
+					class mark_point {description = "marca o ponto";};
+					class timer{};
+				};
 				class transport {
 					file = "a3cn\transport";
 					class init_transport {description = "init transport option";};
@@ -13,12 +21,7 @@ class CfgFunctions
 					class transportserver {description = "server function for airlift";};
 					class init_airlift {description = "init airlift option";};
 					class airliftserver {description = "server function for airlift";};
-					class tracker {description = "mostra onde o ponto está";};
-					class mark_point {description = "marca o ponto";};
-					class mark_global {description = "mark";};
-					class mark_local {description = "mark2";};
 				};
-
 				class gunship
 				{
 					file = "a3cn\gunship";

@@ -10,6 +10,7 @@ _flyheight = _this select 3;
 _escortarray = _this select 4;
 _p = _this select 5;//player that called it
 _pname = name _p;
+_a3cn_rtb = getMarkerPos "a3cn_rtb_lz";
 
 _transportgrp = createGroup (side _p);
 _escortgrp = createGroup (side _p);
@@ -49,14 +50,14 @@ _escortgrp setBehaviour "COMBAT";
 _transportgrp move _pos;
 _escortgrp move _pos;
 
-_msg = format ["%1 transport inbound to your location", _pname];
+_msg = format ["O transporte do %1 está indo em sua localização.", _pname];
 [_air1, _msg] remoteExec ["sideChat"];
 
 _lzpad = "Land_HelipadEmpty_F" createVehicle _pos;
-_lzpad_mark = [_pos,"ColorGreen","Pick Up","mil_start"] call a3cn_fnc_mark_point;
+_lzpad_mark = [_pos,"ColorGreen","LZ de embarque","mil_start"] call a3cn_fnc_mark_point;
 
 //tracking Marker
-_trackname = format ["%1 Transport", _pname];
+_trackname = format ["Transporte do %1", _pname];
 [_air1, "colorBLUFOR", "b_air", _trackname, true, true] spawn a3cn_fnc_tracker;
 
 //waituntil {_pos distance2D _air1 < 400};
@@ -77,13 +78,13 @@ _smoke = "SmokeShellGreen" createVehicle _pos;
 		
 		//a3cn_dest_transport = player addAction ["<t size='1.5' shadow='2' color='#00FF00'>Helicopter Destination</t>", "call a3cn_fnc_dest_transport", [_air1,_flyheight,_escortgrp], 5, false, true, "","alive _target"];
 		
-		a3cn_dest_transport = [_air1,["<t size='1.5' shadow='2' color='#00FF00'>Helicopter Destination</t>", "call a3cn_fnc_mappos", [_air1,_flyheight,_escortgrp,_pname], 5, false, true, "","alive _target"]] remoteExec ["addAction"]; 
+		a3cn_dest_transport = [_air1,["<t size='1.5' shadow='2' color='#00FF00'>Destino da aeronave</t>", "call a3cn_fnc_mappos", [_air1,_flyheight,_escortgrp,_pname], 5, false, true, "","alive _target"]] remoteExec ["addAction"]; 
 		
 		//a3cn_rtb_transport = player addAction ["<t size='1.5' shadow='2' color='#00FFFF'>Helicopter RTB</t>", "call a3cn_fnc_rtb_transport", [_air1,_flyheight,_spawnmark,_escortgrp,[_air1,_air2,_air3]], 5, false, true, "","alive _target"];
 		
-		a3cn_rtb_transport = [_air1,["<t size='1.5' shadow='2' color='#00FFFF'>Helicopter RTB</t>", {
+		a3cn_rtb_transport = [_air1,["<t size='1.5' shadow='2' color='#00FFFF'>RTB para aeronave</t>", {
 			_this remoteExec ["a3cn_fnc_rtb_transport",2];
-		}, [_air1,_flyheight,_spawnmark,_escortgrp,[_air1,_air2,_air3],_pname], 5, false, true, "","alive _target"]] remoteExec ["addAction"];
+		}, [_air1,_flyheight,_a3cn_rtb,_escortgrp,[_air1,_air2,_air3],_pname], 5, false, true, "","alive _target"]] remoteExec ["addAction"];
 	};
 
 waituntil { !(unitReady _air1) or {!(alive _air1)} or {!(canmove _air1)} or {!(alive (driver _air1))}};
@@ -91,6 +92,6 @@ deletevehicle _lzpad;
 deletemarker _lzpad_mark;
 
 	if (!(alive _air1) or {!(canmove _air1)} or {!(alive (driver _air1))}) then {
-		_msg = format ["We lost %1 transport helicopter.", _pname];
+		_msg = format ["Nós perdemos o transporte do %1!", _pname];
 		[[WEST,"AirBase"], _msg] remoteExec ["sideChat"];
 	};
