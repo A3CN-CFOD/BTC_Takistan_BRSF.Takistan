@@ -179,3 +179,5 @@ class GHST
 		class debugtasks {description = "debug to set tasks to complete";};
 	};
 };
+};
+};
