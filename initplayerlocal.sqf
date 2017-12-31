@@ -6,7 +6,7 @@ waituntil {! isnull player};
 
 // Constantes
 
-#define TRANSPORT_DELAY 15 // Tempo necessárop ára chamar o transporte novamente. Em minutos.
+#define TRANSPORT_DELAY 15 // Tempo necessário área chamar o transporte novamente. Em minutos.
 #define TRANSPORT_HELO "B_Heli_Transport_01_F"
 
 #define GUNSHIP_DELAY 25 // Tempo necessário para chamar o Gunship novamente. Em minutos.
@@ -42,10 +42,10 @@ _action = [ "callTransport",
 
 
 
-_action = ["callGunship", 
- 						"Chamar Gunship", 
+_action = ["callGunship",
+ 						"Chamar Gunship",
 						"imagens\radio.paa", {
-						[[9231.83,-897.388,508.451],GUNSHIP_HELO,0,[200,500],GUNSHIP_DELAY,"a3cn_gunship",player,true ] spawn a3cn_fnc_gunship
+						[[9231.83,-897.388,508.451],GUNSHIP_HELO,0,[200,800],GUNSHIP_DELAY,"a3cn_gunship",player,true ] spawn a3cn_fnc_gunship
 						},
 						{player iskindof "B_recon_JTAC_F"}
 ] call ace_interact_menu_fnc_createAction;
