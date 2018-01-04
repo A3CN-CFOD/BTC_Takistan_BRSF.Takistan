@@ -52,7 +52,7 @@ _action = ["callGunship",
 
 [player, 1, ["ACE_SelfActions", "Suporte"], _action] call ace_interact_menu_fnc_addActionToObject;
 
-
+call HALs_fnc_limitThirdPerson;
 
 
 
