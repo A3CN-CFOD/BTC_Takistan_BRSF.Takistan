@@ -11,13 +11,15 @@ _heloarray = _args select 4;
 _pname = _args select 5;//player name that called it
 _transportgrp = group _air1;
 
+heli = _air1;
+
 //_transportgrp setGroupOwner clientOwner;
 //_escortgrp setGroupOwner clientOwner;
 
 _transportgrp move _spawnmark;
 _escortgrp move _spawnmark;
 _air1 flyInHeight _flyheight;
-_msg = format ["%1 Transport Returning to Base", _pname];
+_msg = format ["Transporte do %1 RTB.", _pname];
 [_air1, _msg] remoteExec ["sideChat"];
 
 waituntil { (_spawnmark distance2D _air1 < 100) or {!(alive _air1)} or {!(canmove _air1)} or {!(alive (driver _air1))}};
@@ -28,10 +30,10 @@ waituntil { (unitReady _air1) or {!(alive _air1)} or {!(canmove _air1)} or {!(al
 
 _air1 flyInHeight 0;
 	if (!(alive _air1) or {!(canmove _air1)} or {!(alive (driver _air1))}) then {
-		_msg = format ["We lost %1 transport helicopter.", _pname];
+		_msg = format ["Nós perdemos o transporte do %1!", _pname];
 		[[WEST,"AirBase"], _msg] remoteExec ["sideChat"];
 	} else {
-		_msg = format ["%1 Transport Helicopter at Base", _pname];
+		_msg = format ["O transporte do %1 está na base", _pname];
 		[[WEST,"AirBase"], _msg] remoteExec ["sideChat"];
 	};
 	
@@ -39,6 +41,22 @@ sleep 5;
 
 //player removeAction a3cn_dest_transport;
 //player removeAction a3cn_rtb_transport;
+
+
+_spawnInitialPosition = [9231.83,-897.388,508.451];
+
+_msg = format ["O transporte está aguardando desembarque para retornar a área de operações! Go go go!", _pname];
+[[WEST,"AirBase"], _msg] remoteExec ["sideChat"];
+waituntil {
+	({_x in heli} count allPlayers - entities "HeadlessClient_F") == 0
+};
+
+_transportgrp move _spawnInitialPosition;
+_escortgrp move _spawnInitialPosition;
+_air1 flyInHeight _flyheight;
+
+waituntil { (_spawnInitialPosition distance2D _air1 < 100) or {!(alive _air1)} or {!(canmove _air1)} or {!(alive (driver _air1))}};
+
 {if !(isnil "_x") then {deletevehicle _x;};} foreach units _transportgrp;
 {if !(isnil "_x") then {deletevehicle _x;};} foreach units _escortgrp;
 {if !(isnil "_x") then {deletevehicle _x;};} foreach _heloarray;

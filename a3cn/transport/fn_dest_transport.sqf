@@ -11,14 +11,14 @@ _pname = _this select 4;//player name that called it
 _transportgrp = group _air1;
 
 if (fuel _air1 < 0.25) exitwith {
-	_msg = format ["%1 Transport Fuel low need to rtb", _pname];
+	_msg = format ["O transporte do %1 está em BINGO FUEL e precisa de RTB.", _pname];
 	[_air1, _msg] remoteExec ["sideChat"];
 };
 
-if (surfaceiswater _pos) exitwith {[_air1, "Cannot land in water"] remoteExec ["sideChat"];};
+if (surfaceiswater _pos) exitwith {[_air1, "Impossível pousar na água"] remoteExec ["sideChat"];};
 
 _lzpad = "Land_HelipadEmpty_F" createVehicle _pos;
-_lzpad_mark = [_pos,"ColorGreen","Drop Off","mil_end"] call a3cn_fnc_mark_point;
+_lzpad_mark = [_pos,"ColorGreen","LZ de desembarque","mil_end"] call a3cn_fnc_mark_point;
 
 //_transportgrp setGroupOwner clientOwner;
 //_escortgrp setGroupOwner clientOwner;
@@ -28,7 +28,7 @@ _escortgrp move _pos;
 
 _air1 flyInHeight _flyheight;
 
-_msg = format ["%1 Transport Moving to new location", _pname];
+_msg = format ["O transporte do %1 está movendo para outra localização.", _pname];
 [_air1, _msg] remoteExec ["sideChat"];
 
 waituntil { (_pos distance2D _air1 < 100) or {!(alive _air1)} or {!(canmove _air1)} or {!(alive (driver _air1))}};
@@ -42,7 +42,7 @@ deletevehicle _lzpad;
 deletemarker _lzpad_mark;
 
 	if (!(alive _air1) or {!(canmove _air1)} or {!(alive (driver _air1))}) then {
-		_msg = format ["We lost %1 transport helicopter.", _pname];
+		_msg = format ["Nós perdemos o transporte do %1!", _pname];
 		[[WEST,"AirBase"], _msg] remoteExec ["sideChat"];
 
 		{if !(isnil "_x") then {deletevehicle _x;};} foreach units _transportgrp;
@@ -51,7 +51,7 @@ deletemarker _lzpad_mark;
 		deletegroup _transportgrp;
 	} else {
 		_air1 engineOn false;
-		_msg = format ["%1 Transport Awaiting orders", _pname];
+		_msg = format ["Transporte do %1 pronto. Aguardando ordens.", _pname];
 		[_air1, _msg] remoteExec ["sideChat"];
 
 	};
