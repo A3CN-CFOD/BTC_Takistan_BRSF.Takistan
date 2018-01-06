@@ -32,10 +32,10 @@ _action = ["Suporte", "Suporte", "imagens\radio.paa", {},{player iskindof "B_rec
 
 
 _action = [ "callTransport",
-	  				"Chamar Transporte",
-	  				"imagens\radio.paa",
-	  				{[TRANSPORT_HELO,[ESCORT_HELO],[9231.83,-897.388,508.451],50,TRANSPORT_DELAY] spawn a3cn_fnc_init_transport},
-						{player iskindof "B_Soldier_SL_F"}
+						"Chamar Transporte",
+						"imagens\radio.paa",
+{[TRANSPORT_HELO,[ESCORT_HELO],[9231.83,-897.388,508.451],50,TRANSPORT_DELAY] remoteExec ["a3cn_fnc_init_transport",2]},
+{player iskindof "B_Soldier_SL_F"}
 ] call ace_interact_menu_fnc_createAction;
 
 [player, 1, ["ACE_SelfActions", "Suporte"], _action] call ace_interact_menu_fnc_addActionToObject;
@@ -45,14 +45,18 @@ _action = [ "callTransport",
 _action = ["callGunship",
  						"Chamar Gunship",
 						"imagens\radio.paa", {
-						[[9231.83,-897.388,508.451],GUNSHIP_HELO,0,[200,800],GUNSHIP_DELAY,"a3cn_gunship",player,true ] spawn a3cn_fnc_gunship
+						[[9231.83,-897.388,508.451],GUNSHIP_HELO,0,[200,800],GUNSHIP_DELAY,"a3cn_gunship",player,true ] remoteExec ["a3cn_fnc_gunship",2]
 						},
 						{player iskindof "B_recon_JTAC_F"}
 ] call ace_interact_menu_fnc_createAction;
 
 [player, 1, ["ACE_SelfActions", "Suporte"], _action] call ace_interact_menu_fnc_addActionToObject;
 
-call HALs_fnc_limitThirdPerson;
+
+
+
+
+[] execVM "HALs_fnc_limitThirdPerson.sqf";
 
 
 
